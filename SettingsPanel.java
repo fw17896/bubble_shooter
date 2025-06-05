@@ -11,25 +11,29 @@ public class SettingsPanel extends JPanel {
 	private JPanel lowerPanel;
 	private JSpinner rowsSpinner;
 	private JSpinner colorSpinner;
-	private JButton playButton;
-	private JButton stopGameButton;
+	private JButton startButton;
+	private JButton settingButton;
 	private Image backgroundImg;
+	private int selectedRows = 5;
+    private int selectedColors = 4;
 	
 	// constructor, initiates the panel and sets the parameter as its mainframe
 	public SettingsPanel(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		// ----------------image-------------
-		backgroundImg = new ImageIcon("bdg.jpg").getImage();
-
-   		setOpaque(false);
+		backgroundImg = new ImageIcon("C:\\Users\\FATIMA WASEEM\\OneDrive - Higher Education Commission\\Desktop\\bubble_shooter-master1\\bubble_shooter\\bdg.jpg").getImage();
     }
     
 	
 	//initiates the components of the panel and sets the look and the actionlisteners
 	 
 	public void initComponents(){
- 
+		//Title Label
+		JLabel titleLabel = new JLabel("Bubble Shooter", SwingConstants.CENTER);
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 36));
+        titleLabel.setForeground(Color.WHITE);
+        titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+		add(titleLabel);
 
 		//Score Label
 		scoreLabel = new JLabel("0", SwingConstants.RIGHT);
@@ -55,21 +59,21 @@ public class SettingsPanel extends JPanel {
 	
 		// Button Panel
 		JPanel buttonPanel = new JPanel();
-		playButton = new JButton("PLAY");
-		playButton.setActionCommand("play");
-		playButton.addActionListener(mainFrame);
+		startButton = new JButton("Start Game");
+		settingButton = new JButton("Settings");
+
+		startButton.setActionCommand("start");
+		startButton.addActionListener(mainFrame);
 		buttonPanel.setOpaque(false);
-		
-		// stopGameButton = new JButton("Stop Game");
-		// stopGameButton.setActionCommand("STOPGAME");
-		// stopGameButton.addActionListener(mainFrame);
-		buttonPanel.add(playButton);
-		// buttonPanel.add(stopGameButton);
+
+		buttonPanel.add(startButton);
+		buttonPanel.add(settingButton);
 
 		//Button Style
-		styleButton(playButton, new Color(70, 130, 180)); // Steel blue
-        // styleButton(stopGameButton, new Color(220, 20, 60)); // Crimson
+		styleButton(startButton, new Color(255, 140, 0)); // Steel blue
+        styleButton(settingButton, new Color(255, 140, 0));
 		
+		settingButton.addActionListener(e -> openSettingsDialog());
 
 		lowerPanel.add(buttonPanel);
 		add(lowerPanel, BorderLayout.CENTER);
@@ -82,6 +86,69 @@ public class SettingsPanel extends JPanel {
         button.setForeground(Color.WHITE);
         button.setFont(new Font("Arial", Font.BOLD, 14));
         button.setFocusPainted(false);
+		button.setSize(180,40);
+    }
+
+	public void openSettingsDialog() {
+        JDialog settingsDialog = new JDialog((Frame) SwingUtilities.getWindowAncestor(this), "Game Settings", true);
+        settingsDialog.setSize(320, 220);
+        settingsDialog.setLocationRelativeTo(this);
+        settingsDialog.setLayout(new GridBagLayout());
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
+
+        JLabel messageLabel = new JLabel("Enter initial settings:");
+		messageLabel.setFont(new Font("Arial", Font.BOLD, 25));
+        gbc.gridx = 0; gbc.gridy = 0; gbc.gridwidth = 2;
+        settingsDialog.add(messageLabel, gbc);
+
+        // Color Spinner
+        gbc.gridwidth = 1;
+        gbc.gridx = 0; gbc.gridy = 1;
+        settingsDialog.add(new JLabel("Colors:"), gbc);
+        SpinnerNumberModel colorModel = new SpinnerNumberModel(selectedColors, 3, 8, 1);
+        JSpinner colorSpinner = new JSpinner(colorModel);
+		colorSpinner.setFont(new Font("Arial", Font.BOLD, 16));
+        colorSpinner.setBackground(Color.WHITE);
+        gbc.gridx = 1;
+        settingsDialog.add(colorSpinner, gbc);
+
+        // // Row Spinner
+        gbc.gridx = 0; gbc.gridy = 2;
+        settingsDialog.add(new JLabel("Rows:"), gbc);
+        SpinnerNumberModel rowModel = new SpinnerNumberModel(selectedRows, 3, 20, 1);
+        JSpinner rowSpinner = new JSpinner(rowModel);
+		rowSpinner.setFont(new Font("Arial", Font.BOLD, 16));
+        rowSpinner.setBackground(Color.WHITE);
+        gbc.gridx = 1;
+        settingsDialog.add(rowSpinner, gbc);
+
+        // OK Button
+        JButton okButton = new JButton("OK");
+		okButton.setForeground(Color.WHITE);
+        okButton.setFont(new Font("Arial", Font.BOLD, 14));
+        okButton.setFocusPainted(false);
+		okButton.setSize(180,40);
+		okButton.setBackground(new Color(70, 130, 180));
+        gbc.gridx = 0; gbc.gridy = 3; gbc.gridwidth = 2;
+        settingsDialog.add(okButton, gbc);
+
+        okButton.addActionListener(e -> {
+            selectedColors = (int) colorSpinner.getValue();
+            selectedRows = (int) rowSpinner.getValue();
+            settingsDialog.dispose();
+        });
+
+        settingsDialog.setVisible(true);
+    }
+
+	public int getRow() {
+        return selectedRows;
+    }
+
+    public int getColor() {
+        return selectedColors;
     }
 
 	public JPanel createLabeledSpinner(String labelText, int initial, int min, int max) {
@@ -108,23 +175,13 @@ public class SettingsPanel extends JPanel {
 	//updates the score in the score counter field
 	public void updateScore(long score){
 		scoreLabel.setText(String.valueOf(score));
-		// scoreLabel.setText((new Long(score).toString()));
-	}
-	
-	// returns the selected number of rows
-	public int getRow(){
-		return (int) rowsSpinner.getValue();
-	}
-	
-	//returns the selected number of colors
-	public int getColor(){
-		return (int) colorSpinner.getValue();
 	}
 
-	// image
+
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.drawImage(backgroundImg, 0, 0, getWidth(), getHeight(), this);
 }
 	
 }
+
