@@ -21,7 +21,7 @@ public class SettingsPanel extends JPanel {
 	public SettingsPanel(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		backgroundImg = new ImageIcon("C:\\Users\\FATIMA WASEEM\\OneDrive - Higher Education Commission\\Desktop\\bubble_shooter-master1\\bubble_shooter\\bdg.jpg").getImage();
+		backgroundImg = new ImageIcon("bdg.jpg").getImage();
     }
     
 	
