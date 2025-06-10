@@ -4,121 +4,77 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
-/**
- * realises the bubbles of the game
- */
+// realises the bubbles of the game
 public class Bubble {
-	/**
-	 * the color of the bubble
-	 */
 	Color color;
-	/**
-	 * radius of a bubble
-	 */
 	public static final int RADIUS = 14;
-	/**
-	 * visibility of the bubble on the screen
-	 */
 	private boolean visible;
-	/**
-	 * location of the top left corner of the bubble
-	 */
 	Point loc;
-	/**
-	 * used for marking the bubble (mostly to be removed)
-	 */
 	private boolean marked;
 	
-	/**
-	 * constructor for the class bubble
-	 */
+	
+	// constructor
 	public Bubble(Color c){
 		color = c;
 		marked = false;
 	}
 	
-	/**
-	 * returns the y coordinate of the bubble within the bubble matrix
-	 */
+	// returns the y coordinate of the bubble
 	public int getRow(){
 		return loc.y/(Constants.ROW_DISTANCE/2);
 	}
 	
-	/**
-	 * returns the x coordinate of the bubble within the bubble matrix
-	 */
+	// returns the x coordinate of the bubble
 	public int getCol(){
 		return loc.x/((Bubble.RADIUS+1)*2);
 	}
 	
-	/**
-	 * marks the bubble for further operations
-	 */
+	// marks the bubble
 	public void mark(){
 		marked=true;
 	}
 	
-	/**
-	 * unmarks the bubble
-	 */
+	// unmarks the bubble
 	public void unmark(){
 		marked = false;
 	}
 	
-	/**
-	 * returns if the bubble is marked
-	 */
+	// returns if the bubble is marked
 	public boolean isMarked(){
 		return marked;
 	}
 	
-	/**
-	 * getter for the color of the bubble
-	 */
+	// getter for the color of the bubble
 	public Color getColor(){
 		return color;
 	}
 	
-	/**
-	 * setter for visiblity
-	 */
+	// setter for visiblity
 	public void setVisible(boolean v){
 		visible = v;
 	}
 	
-	/**
-	 * getter for visibility
-	 */
+	// getter for visibility
 	public boolean isVisible(){
 		return visible;
 	}
 	
-	/**
-	 * setter for the location of the bubble (top left corner)
-	 */
+	// setter for the location of the bubble
 	public void setLocation(Point p){
 		this.loc=p;
 	}
 	
-	/**
-	 * getter for the location of the bubble (top left corner)
-	 */
+	// getter for the location of the bubble
 	public Point getLocation(){
 		return loc;
 	}
 	
-	/**
-	 * getter for the location of the center of the bubble
-	 * @return the location of the center of the bubble
-	 */
+	// getter for the location of the center of the bubble
 	public Point getCenterLocation(){
-		return new Point(loc.x+RADIUS+1,
-						 loc.y+RADIUS+1);
+		return new Point(loc.x+RADIUS+1, loc.y+RADIUS+1);
 	}
 	
-	/**
-	 * paints the bubble on the given object with the specified color to the specified location
-	 */
+	// paints the bubble on the given object with the specified color to the specified location
 	public void paintBubble(Graphics2D g2d){
 		if(isVisible()){
 			g2d.setColor(color);
@@ -126,9 +82,7 @@ public class Bubble {
 		}
 	}
 	
-	/**
-	 * static method for getting a random color that can be set as the color of a bubble
-	 */
+	// gets a random color that can be set as the color of a bubble
 	public static Color getRandomColor(int bound){
 		int rnd = (int) (bound<=8 ? Math.random()*bound : Math.random()*8);
 		switch (rnd) {

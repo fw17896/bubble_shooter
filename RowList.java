@@ -1,8 +1,6 @@
 package bubble_shooter;
 import java.util.ArrayList;
 
-// a simple extension of the arraylist class to store a
-
 public class RowList extends ArrayList<Bubble> {
 	private boolean full;
 	

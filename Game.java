@@ -2,15 +2,15 @@ package bubble_shooter;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
 import java.util.*;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.Timer;
 
-/**
- * the engine of the game
- * @author Barni
- *
- */
+// the engine of the game
 public class Game implements ActionListener{
 	/**
 	 * the container of the bubbles on the screen
@@ -21,99 +21,25 @@ public class Game implements ActionListener{
 	 * the container of the 4 bubbles waiting to be shot
 	 */
 	private LinkedList<Bubble> upcoming;
-	
-	/**
-	 * the bubble that currently moves on the screen
-	 */
 	private MovingBubble moving_bubble;
-	
-	/**
-	 * number of the initial rows
-	 */
 	private int initial_rows;
-	
-	/**
-	 * number of the possible colors of bubbles
-	 */
 	private int colors;
-	
-	/**
-	 * timer object for the linear movement of the moving bubble
-	 */
 	private Timer timer;
-	
-	/**
-	 * the canvas object where the bubbles should be painted
-	 */
 	private Canvas canvas;
-	
-	/**
-	 * number of the unsuccessful (no bubbles disappeared) shots.
-	 * used for adding a top row when it reaches 5
-	 */
 	private int shotCount;
-	
-	/**
-	 * number of bubbles on the screen minus the upcoming ones
-	 */
 	private int numOfBubbles;
-	
-	/**
-	 * the frame where the game is located
-	 */
 	private MainFrame mainFrame;
-	
-	/**
-	 * the achieved score
-	 */
 	private long score;
-	
-	/**
-	 * true if the game is stopped (the highscore is being displayed),
-	 * else false
-	 */
 	private boolean stopped;
-	
-	/**
-	 * the maximal number of rows of bubbles on the screen
-	 */
-	public static final int ROW_COUNT = 16;
-	
-	/**
-	 * the number of bubbles in a row that fill the field in width
-	 */
+	public static final int ROW_COUNT = 12;
 	public static final int COL_COUNT_FULL = 14;
-	
-	/**
-	 * the number of bubbles in a row that does not fill the field in width
-	 */
 	public static final int COL_COUNT = 13;
-	
-	/**
-	 * the score received for a shot bubble
-	 */
 	public static final int SCORE_SHOT = 10;
-	
-	/**
-	 * the score received for removing a bubble of the same color
-	 * as the one shot
-	 */
 	public static final int SCORE_COHERENT = 20;
-	
-	/**
-	 * the score received for removing a bubble that anyway would
-	 * just float on the field
-	 */
 	public static final int SCORE_FLOATING = 40;
 
 	
-	/**
-	 * contructor for a new game. initalises the bubble matrix, the
-	 * upcoming bubbles and other parameters
-	 * @param row initial number of rows
-	 * @param colors number of colors that the bubbles can colored with
-	 * @param c the canvas for the game
-	 */
+	// contructor for a new game. initalises the bubble matrix, the upcoming bubbles and other parameters
 	public Game(int row, int colors, Canvas c){
 		canvas = c;
 		stopped = false;
@@ -154,18 +80,12 @@ public class Game implements ActionListener{
 		arrangeUpcoming();
 	}
 	
-	/**
-	 * setter for the mainframe
-	 * @param m mainframe to be set
-	 */
+	// setter for the mainframe
 	public void setMainFrame(MainFrame m){
 		mainFrame = m;
 	}
 	
-	/**
-	 * paints the bubbles on the screen (the upcoming ones as well)
-	 * @param g2d the graphics object to paint to
-	 */
+	// paints the bubbles on the screen
 	public void paintBubbles(Graphics2D g2d){
 		for(RowList r : bubbles){
 			for(Bubble b : r){
@@ -179,10 +99,7 @@ public class Game implements ActionListener{
 			moving_bubble.paintBubble(g2d);
 	}
 	
-	/**
-	 * shifts the upcoming bubbles by one. the first is removed and
-	 * one is added to the end
-	 */
+	// arrange the bubble when bubble is removed and add
 	private void arrangeUpcoming(){
 		upcoming.element().setLocation(
 				new Point(Constants.FIELD_SIZE_X/2-Bubble.RADIUS,
@@ -196,11 +113,7 @@ public class Game implements ActionListener{
 		}
 	}
 		
-	/**
-	 * fires the bubble that is on the first place in the upcoming list
-	 * @param mouseLoc location of the mouse on the screen
-	 * @param panelLoc location of the panel on the screen
-	 */
+	// fires the bubble
 	public void fire(Point mouseLoc, Point panelLoc){
 		boolean movingExists = !(moving_bubble==null);
 		movingExists = (movingExists ? moving_bubble.isMoving() : false);
@@ -208,6 +121,7 @@ public class Game implements ActionListener{
 			Point dir = new Point(mouseLoc.x-panelLoc.x,
 							  mouseLoc.y-panelLoc.y);
 		moving_bubble = new MovingBubble(upcoming.remove(),dir);
+		playSoundEffect("C:\\\\Users\\\\FATIMA WASEEM\\\\OneDrive - Higher Education Commission\\\\Desktop\\\\bubble_shooter-master1\\\\bubble_shooter\\float.wav");
 		upcoming.add(new Bubble(Bubble.getRandomColor(colors)));
 		arrangeUpcoming();
 		numOfBubbles++;
@@ -218,10 +132,7 @@ public class Game implements ActionListener{
 		}
 	}
 
-	/**
-	 * checks whether the moving bubble is close to a fixed one.
-	 * if yes, then it will be fixed in the hexile grid
-	 */
+	// checks whether the moving bubble is close to a fixed one if yes, then it will be fixed in the hexile grid
 	public void checkProximity(){
 		int currentPosX = moving_bubble.getCenterLocation().x;
 		int currentPosY = moving_bubble.getCenterLocation().y;
@@ -247,11 +158,7 @@ public class Game implements ActionListener{
 		}
 	}
 	
-	/**
-	 * places the moving bubble in the grid on the given position
-	 * @param row the row-index in the grid
-	 * @param col the column-index in the grid
-	 */
+	// places the moving bubble in the grid on the given position
 	private void fixBubble(int row, int col){
 		Point temp_point = bubbles.get(row).get(col).getLocation();
 		moving_bubble.setLocation(temp_point);
@@ -284,9 +191,7 @@ public class Game implements ActionListener{
 		}
 	}
 	
-	/**
-	 * adds a new row on the top of the field
-	 */
+	// adds a new row on the top of the field
 	private void addRow(){
 		bubbles.remove(ROW_COUNT-1);
 		for (RowList r : bubbles){
@@ -309,12 +214,7 @@ public class Game implements ActionListener{
 		bubbles.add(0,newRow);
 	}
 	
-	/**
-	 * returns the neighbours of a bubble in the grid
-	 * @param row row-index of the bubble in the grid 
-	 * @param col column-index of the bubble in the grid
-	 * @return list of the neighbouring bubbles
-	 */
+	// returns the neighbours of a bubble in the grid
 	private ArrayList<Bubble> getNeighbours(int row, int col){
 		ArrayList<Bubble> neighbours = new ArrayList<Bubble>();
 		//LEFT
@@ -354,29 +254,20 @@ public class Game implements ActionListener{
 		return neighbours;
 	}
 	
-	/**
-	 * returns the distance of the two bubbles given as parameters 
-	 * @param b1 first bubble
-	 * @param b2 second bubble
-	 * @return the distance of the bubbles
-	 */
+	// returns the distance of the two bubbles
 	public static double BubbleDist(Bubble b1, Bubble b2){
 		double x_dist = b1.getCenterLocation().x-b2.getCenterLocation().x;
 		double y_dist = b1.getCenterLocation().y-b2.getCenterLocation().y;
 		return Math.sqrt(Math.pow(x_dist, 2)+Math.pow(y_dist, 2));
 	}
 	
-	/**
-	 * removes the bubbles that are coherent with the recently placed one
-	 * @param row row-index of the placed bubble
-	 * @param col column-index of the placed bubble
-	 * @return the number of removed bubbles
-	 */
+	// removes the bubbles that are coherent with the recently placed one
 	private int removeCoherent(int row, int col){
 		unMarkAll();
 		markColor(row, col);
 		int ret = 0;
 		if(countMarked()>2){
+			playSoundEffect("C:\\Desktop\\bubble_shooter-master1\\bubble_shooter\\pop.wav");
 			ret = countMarked();
 			removeMarked();
 		}
@@ -385,11 +276,7 @@ public class Game implements ActionListener{
 		return ret;
 	}
 	
-	/**
-	 * removes all bubbles that would anyway just float in the grid
-	 * (so not connected to the top of the field by a chain of bubbles)
-	 * @return the number of removed bubbles
-	 */
+	// removes all bubbles that would anyway just float in the grid
 	private int removeFloating(){
 		markAll();
 		for (Bubble b : bubbles.get(0)){
@@ -397,19 +284,26 @@ public class Game implements ActionListener{
 				unMarkNotFloating(b.getRow(), b.getCol());
 			}
 		}
+
 		int ret = countMarked();
 		removeMarked();
 		unMarkAll();
 		score+=ret*SCORE_FLOATING;
 		return ret;
 	}
+
+	public void playSoundEffect(String filepath) {
+		try {
+			AudioInputStream audioStream = AudioSystem.getAudioInputStream(new File(filepath));
+			Clip soundClip = AudioSystem.getClip();
+			soundClip.open(audioStream);
+			soundClip.start();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
-	/**
-	 * unmarks not floating elements outgoing from the bubble gived with
-	 * the coordinates
-	 * @param row row-index of the bubble
-	 * @param col column-index o the bubble
-	 */
+	// unmarks not floating elements outgoing from the bubble
 	private void unMarkNotFloating(int row, int col){
 		bubbles.get(row).get(col).unmark();
 		for (Bubble b : getNeighbours(row, col)){
@@ -419,13 +313,7 @@ public class Game implements ActionListener{
 		}
 	}
 	
-	/**
-	 * marks the bubbles that have the same color as the one given with
-	 * the coordinates (these ones must be somehow connected to the
-	 * given one with a series of bubbles of the same color)
-	 * @param row row-index of the bubble
-	 * @param col column-index of the bubble
-	 */
+	// marks the bubbles that have the same color
 	private void markColor(int row, int col){
 		bubbles.get(row).get(col).mark();
 		for (Bubble b : getNeighbours(row, col)){
@@ -437,10 +325,7 @@ public class Game implements ActionListener{
 		}
 	}
 	
-	/**
-	 * counts the marked bubbles in the bubble-matrix
-	 * @return number of the marked bubbles
-	 */
+	// counts the marked bubbles in the bubble-matrix
 	private int countMarked() {
 		int ret = 0;
 		for(RowList r : bubbles){
@@ -453,9 +338,7 @@ public class Game implements ActionListener{
 		return ret;
 	}
 	
-	/**
-	 * unmarks all bubbles
-	 */
+	// unmarks all bubbles
 	private void unMarkAll(){
 		for(RowList r : bubbles){
 			for(Bubble b : r){
@@ -464,9 +347,7 @@ public class Game implements ActionListener{
 		}
 	}
 	
-	/**
-	 * marks all bubbles
-	 */
+	//marks all bubbles
 	private void markAll(){
 		for(RowList r : bubbles){
 			for(Bubble b : r){
@@ -475,9 +356,7 @@ public class Game implements ActionListener{
 		}
 	}
 	
-	/**
-	 * removes all marked bubbles
-	 */
+	// removes all marked bubbles
 	private void removeMarked(){
 		for(RowList r : bubbles){
 			for(Bubble b : r){
@@ -488,55 +367,36 @@ public class Game implements ActionListener{
 		}
 	}
 	
-	/**
-	 * returns whether the game is stopped or running
-	 * @return true if the game is stopped, else false
-	 */
+	// returns whether the game is stopped or running
 	public boolean isStopped() {
 		return stopped;
 	}
 	
-	/**
-	 * stops the game
-	 */
+	// stops the game
 	public void stop(){
 		stopped = true;
 	}
 	
-	/**
-	 * returns the initial number of rows of the game 
-	 * @return inital number of rows
-	 */
+	// returns the initial number of rows of the game 
 	public int getInitialRows(){
 		return initial_rows;
 	}
 	
-	/**
-	 * returns the number of colors used in the game to color bubbles
-	 * @return number of colors maximally used
-	 */
+	// returns the number of colors used in the game to color bubbles
 	public int getColors(){
 		return colors;
 	}
 	
-	/**
-	 * returns the score currently achieved by the player
-	 * @return the currently achieved score
-	 */
+	// returns the score currently achieved by the player
 	public long getScore(){
 		return score;
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 */
+
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		moving_bubble.move();
 		checkProximity();
 		canvas.repaint();
 	}
-
-	
-	
 }

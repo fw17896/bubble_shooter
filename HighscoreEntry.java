@@ -3,14 +3,12 @@ import java.io.*;
 import java.util.*;
 
 //  a class that can store an entry of highscore
- 
 public class HighscoreEntry implements Serializable, Comparable<HighscoreEntry>, Comparator<HighscoreEntry>{
 	private String name;
 	private long score;
 	private int rows;
 	private int color;
-	
-	
+		
 	//  constructor for the class
 	public HighscoreEntry(String name, long score, int rows, int color) {
 		this.name = name;
@@ -19,14 +17,12 @@ public class HighscoreEntry implements Serializable, Comparable<HighscoreEntry>,
 		this.color = color;
 	}
 	
-	
 	//  getter for the name	 	 
 	public String getName() {
 		return name;
 	}
 	
-	//  setter for the name	 
-	 
+	//  setter for the name	  
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -62,9 +58,7 @@ public class HighscoreEntry implements Serializable, Comparable<HighscoreEntry>,
 	}
 	
 	
-	//  serialisation
-	//  o the objectouptupstream to write to
-	 
+	//  serialization to write
 	public void writeObject(ObjectOutputStream o) throws IOException{
 		o.writeObject(name);
 		o.writeLong(score);
@@ -73,9 +67,7 @@ public class HighscoreEntry implements Serializable, Comparable<HighscoreEntry>,
 	}
 	
 	
-	//  deserialisation
-	//  o the objectinputstream to read from
-	 
+	//  deserialisation to read from
 	public void readObject(ObjectInputStream o) throws IOException, ClassNotFoundException{
 		name = (String) o.readObject();
 		score = (long) o.readLong();
@@ -83,7 +75,7 @@ public class HighscoreEntry implements Serializable, Comparable<HighscoreEntry>,
 		color = (int) o.readInt();
 	}
 	
-	
+	// This is used for natural ordering.
 	@Override
 	public int compareTo(HighscoreEntry other) {
 		if(score > other.getScore()) return -1;
@@ -91,7 +83,7 @@ public class HighscoreEntry implements Serializable, Comparable<HighscoreEntry>,
 		return 0;
 	}
 	
-	
+	// This is used when the class also acts as a Comparator.
 	@Override
 	public int compare(HighscoreEntry h1, HighscoreEntry h2) {
 		if(h1.score > h2.getScore()) return -1;

@@ -4,23 +4,22 @@ import java.util.*;
 import javax.swing.table.AbstractTableModel;
 
 //   a class that can store the whole set of highscored and provides, a tablemodell for the table
-
 public class Highscores extends AbstractTableModel implements Serializable{	 
 	ArrayList<HighscoreEntry> entries = new ArrayList<HighscoreEntry>();
 	
-	
+	// Returns the number of columns in the table
 	@Override
 	public int getColumnCount() {
 		return 4;
 	}
 	
-	 
+	// Returns the number of rows in the table, equal to the number of entries 
 	@Override
 	public int getRowCount() {
 		return entries.size();
 	}
 
-	
+	// Returns the value at a specific row and column in the table
 	@Override
 	public Object getValueAt(int row, int col) {
 		HighscoreEntry entry = entries.get(row);
@@ -36,7 +35,7 @@ public class Highscores extends AbstractTableModel implements Serializable{
 		}
 	}
 	
-	 
+	// Returns the name of a specific column 
 	@Override
 	public String getColumnName(int index){
 		switch(index) {
@@ -51,6 +50,7 @@ public class Highscores extends AbstractTableModel implements Serializable{
 		}
 	}
 
+	// Returns the class type of a specific column (used by JTable for rendering)
 	@Override
 	public Class getColumnClass(int index){
 		switch(index) {
@@ -66,13 +66,14 @@ public class Highscores extends AbstractTableModel implements Serializable{
 	}
 
 
+	// Specifies that cells are not editable
 	@Override
 	public boolean isCellEditable(int rowIndex, int colIndex) {
 		return false;
 	}
 	
 	
-	//   adds an entry to the list 
+	// Adds a high score entry and sorts the list
 	public void addEntry(HighscoreEntry e){
 		entries.add(e);
 		Collections.sort(entries);

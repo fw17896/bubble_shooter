@@ -3,15 +3,12 @@ package bubble_shooter;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 
-/**
- * the class for providing a canvas for the game and the highscores, and for managing the highscores
- */
-public class Canvas extends JPanel implements
-		MouseMotionListener, MouseListener, ActionListener {
-	
 
+// the class for providing a canvas for the game and the highscores, and for managing the highscores
+public class Canvas extends JPanel implements MouseMotionListener, MouseListener, ActionListener {
 	private Arrow arrow;
 	private Game game;
 	private JLayeredPane lPane;
@@ -24,20 +21,13 @@ public class Canvas extends JPanel implements
 	private JScrollPane scrollPane;
 	private static final String fileName = "bubble_shooter_hs.dat";
 	private boolean gameStarted = false;
-	
-	/**
-	 * constructor for the class. sets of the table that displayes
-	 * the highscores, a layer to mildly blur the underlying
-	 * bubbles and a dialog for asking for a name of the player
-	 * reached the toplist 
-	 */
+	private MainFrame mainFrame;
+	private Clip backgroundMusic;
+
+	// constructor for the class. sets of the table that displayes the highscores, a layer to mildly blur the underlying bubbles and a dialog for asking for a name of the player reached the toplist 
 	public Canvas(){
 		setLayout(new BorderLayout());
-		// setPreferredSize(
-		// 		new Dimension(Constants.FIELD_SIZE_X, 
-		// 				      Constants.FIELD_SIZE_Y));
 		setPreferredSize(null); // Let layout manager decide
-		// setMinimumSize(new Dimension(200, 200)); // Optional
 
 		setBorder(BorderFactory.createEmptyBorder());
 		addMouseMotionListener(this);
@@ -104,8 +94,20 @@ public class Canvas extends JPanel implements
 		subNamePanel.add(please);
 		subNamePanel.add(formContainer);
 		namePanel.add(subNamePanel,BorderLayout.CENTER);
+
+		setLayout(null); // allow absolute positioning
 		
 	}
+
+	public void styleGameButton(JButton button) {
+		button.setBackground(new Color(255, 140, 0));
+		button.setForeground(Color.WHITE);
+		button.setFont(new Font("Arial", Font.BOLD, 16));
+		button.setFocusPainted(false);
+		button.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
+		button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+}
+
 	
 	/**
 	 * triggers the repainting of the panel with the highscores
@@ -113,20 +115,9 @@ public class Canvas extends JPanel implements
 	 * of the player. if the parameter score is unequal zero then
 	 * the player has reached the toplist. if it equals zero, the
 	 * dialog isn't displayed.
-	 * @param score the score reached by the player, or 0
-	 * @param win true if the player won the game, else false
 	 */
 	public void displayHighscore(long score, boolean win){
-		// resultText.setText(win ? "You win!" : "You lose");
-		// if(score != 0){
-		// 	lPane.add(namePanel,JLayeredPane.DRAG_LAYER);
-		// }
-		// add(lPane);
-		// loadHighscores();
-		// highscoreTable.setModel(highscores);
-		// repaint();
-
-		gameStarted = false; // Hide game visuals
+		gameStarted = false;
 		resultText.setText(win ? "You win!" : "You lose");
 		if(score != 0){
 			lPane.add(namePanel, JLayeredPane.DRAG_LAYER);
@@ -138,18 +129,8 @@ public class Canvas extends JPanel implements
 
 	}
 	
-	/**
-	 * instantiates a new game object and repaints the left panel
-	 * with the game displayed
-	 * @param row the initial number of rows
-	 * @param color the number of colors to be used
-	 */
+	// instantiates a new game object 
 	public void newGame(int row, int color){
-		// game = new Game(row, color,this);
-		// lPane.remove(namePanel);
-		// remove(lPane);
-		// repaint();
-
 		game = new Game(row, color, this);
 		gameStarted = true;
 		lPane.remove(namePanel);
@@ -158,17 +139,12 @@ public class Canvas extends JPanel implements
 
 	}
 	
-	/**
-	 * getter for the game object
-	 * @return the game that is actually being played
-	 */
+	// getter for the game object
 	public Game getGame(){
 		return game;
 	}
 	
-	/**
-	 * writes the highscores to a file named "bubble_shooter_hs.dat"
-	 */
+	// writes the highscores to a file named "bubble_shooter_hs.dat"
 	private void saveHighscores(){
 		try{
 			ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(fileName));
@@ -180,10 +156,7 @@ public class Canvas extends JPanel implements
 		}
 	}
 	
-	/**
-	 * reads the highscores from the fie named "bubble_shooter_hs.dat"
-	 * if it exists
-	 */
+	// reads the highscores from the fie named "bubble_shooter_hs.dat"
 	private void loadHighscores(){
 		try{
 			File f = new File("bubble_shooter_hs.dat");
@@ -200,16 +173,6 @@ public class Canvas extends JPanel implements
 	
 	@Override
 	public void paintComponent(Graphics g) {
-		// super.paintComponent(g);
-		// Graphics2D g2d = (Graphics2D) g;
-		// g2d.setRenderingHints(
-		// 		new RenderingHints(RenderingHints.KEY_ANTIALIASING,
-		// 						   RenderingHints.VALUE_ANTIALIAS_ON));
-		// if (game != null){
-		// 	game.paintBubbles(g2d);
-		// }
-		// arrow.paintComponent(g2d,getLocationOnScreen());
-		
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHints(new RenderingHints(
@@ -264,5 +227,10 @@ public class Canvas extends JPanel implements
 			lPane.remove(namePanel);
 			displayHighscore(0, true);
 		}
-	} 
+	}
+	
+	public void setMainFrame(MainFrame frame) {
+    	this.mainFrame = frame;
+}
+
 }

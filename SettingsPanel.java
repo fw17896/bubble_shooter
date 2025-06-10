@@ -1,19 +1,17 @@
 package bubble_shooter;
-
 import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
 
 //   a class to display the panel of settings and scores on the right and handle the settings of the game
 public class SettingsPanel extends JPanel {
 	
-	private MainFrame mainFrame;
+	private final MainFrame mainFrame;
 	private JLabel scoreLabel;
 	private JPanel lowerPanel;
-	private JSpinner rowsSpinner;
-	private JSpinner colorSpinner;
 	private JButton startButton;
 	private JButton settingButton;
-	private Image backgroundImg;
+	private final Image backgroundImg;
 	private int selectedRows = 5;
     private int selectedColors = 4;
 	
@@ -21,53 +19,43 @@ public class SettingsPanel extends JPanel {
 	public SettingsPanel(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		backgroundImg = new ImageIcon("bdg.jpg").getImage();
+		backgroundImg = new ImageIcon("C:\\Desktop\\bubble_shooter-master1\\bubble_shooter\\bdg.jpg").getImage();
     }
-    
-	
+
+
 	//initiates the components of the panel and sets the look and the actionlisteners
 	 
 	public void initComponents(){
 		//Title Label
 		JLabel titleLabel = new JLabel("Bubble Shooter", SwingConstants.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 36));
-        titleLabel.setForeground(Color.WHITE);
+        titleLabel.setForeground(Color.ORANGE);
         titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        add(Box.createVerticalStrut(100));
 		add(titleLabel);
-
-		//Score Label
-		scoreLabel = new JLabel("0", SwingConstants.RIGHT);
-		scoreLabel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.lightGray));
-		scoreLabel.setFont(new Font("Arial", Font.BOLD, 32));
-        scoreLabel.setForeground(Color.white);
-        add(scoreLabel, BorderLayout.SOUTH);
-
+        add(Box.createVerticalStrut(50));
+////////
+		scoreLabel = new JLabel();
+//////
 		 // Lower Panel
 		lowerPanel = new JPanel();
 		lowerPanel.setLayout(new BoxLayout(lowerPanel, BoxLayout.Y_AXIS));
 		lowerPanel.setOpaque(false);
-
-		// Rows Spinner
-        lowerPanel.add(createLabeledSpinner("Initial rows", 5, 3, 10));
-        rowsSpinner = (JSpinner) ((JPanel) lowerPanel.getComponent(lowerPanel.getComponentCount() - 1)).getComponent(1);
 	
-		// Color Spinner
-        lowerPanel.add(Box.createRigidArea(new Dimension(0, 10)));
-        lowerPanel.add(createLabeledSpinner("Initial colors", 4, 3, 8));
-        colorSpinner = (JSpinner) ((JPanel) lowerPanel.getComponent(lowerPanel.getComponentCount() - 1)).getComponent(1);
-		((JSpinner.DefaultEditor) colorSpinner.getEditor()).getTextField().setHorizontalAlignment(JTextField.CENTER);
-	
-		// Button Panel
-		JPanel buttonPanel = new JPanel();
+		// Buttons
 		startButton = new JButton("Start Game");
 		settingButton = new JButton("Settings");
 
 		startButton.setActionCommand("start");
 		startButton.addActionListener(mainFrame);
-		buttonPanel.setOpaque(false);
 
-		buttonPanel.add(startButton);
-		buttonPanel.add(settingButton);
+        startButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        settingButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+		lowerPanel.add(startButton);
+        lowerPanel.add(Box.createVerticalStrut(20));
+		lowerPanel.add(settingButton);
+        lowerPanel.add(Box.createVerticalStrut(40));
 
 		//Button Style
 		styleButton(startButton, new Color(255, 140, 0)); // Steel blue
@@ -75,18 +63,35 @@ public class SettingsPanel extends JPanel {
 		
 		settingButton.addActionListener(e -> openSettingsDialog());
 
-		lowerPanel.add(buttonPanel);
-		add(lowerPanel, BorderLayout.CENTER);
+		add(lowerPanel);
 		setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 	}
 
-	//Button Style
+// 	//Button Style
 	public void styleButton(JButton button, Color background) {
         button.setBackground(background);
         button.setForeground(Color.WHITE);
-        button.setFont(new Font("Arial", Font.BOLD, 14));
+        button.setFont(new Font("Arial", Font.BOLD, 20));
         button.setFocusPainted(false);
 		button.setSize(180,40);
+        button.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(background.darker(), 2),
+            BorderFactory.createEmptyBorder(10, 20, 10, 20)
+        ));
+        button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        button.setContentAreaFilled(false);
+        button.setOpaque(true);
+
+        button.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent evt) {
+                button.setBackground(background.brighter());
+            }
+            @Override
+            public void mouseExited(MouseEvent evt) {
+                button.setBackground(background);
+            }
+        });
     }
 
 	public void openSettingsDialog() {
@@ -151,37 +156,14 @@ public class SettingsPanel extends JPanel {
         return selectedColors;
     }
 
-	public JPanel createLabeledSpinner(String labelText, int initial, int min, int max) {
-        JPanel panel = new JPanel(new BorderLayout());
-        panel.setOpaque(false);
-
-        JLabel label = new JLabel(labelText);
-        label.setFont(new Font("Arial", Font.BOLD, 18));
-        label.setForeground(Color.white);
-
-        SpinnerModel model = new SpinnerNumberModel(initial, min, max, 1);
-        JSpinner spinner = new JSpinner(model);
-        spinner.setFont(new Font("Arial", Font.BOLD, 16));
-        spinner.setBackground(Color.WHITE);
-        ((JSpinner.DefaultEditor) spinner.getEditor()).getTextField().setHorizontalAlignment(JTextField.CENTER);
-
-        panel.add(label, BorderLayout.WEST);
-        panel.add(spinner, BorderLayout.EAST);
-        return panel;
-    }
-
-
-	
 	//updates the score in the score counter field
 	public void updateScore(long score){
 		scoreLabel.setText(String.valueOf(score));
 	}
 
-
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.drawImage(backgroundImg, 0, 0, getWidth(), getHeight(), this);
-}
+    }
 	
 }
-
