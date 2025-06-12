@@ -12,14 +12,7 @@ import javax.swing.Timer;
 
 // the engine of the game
 public class Game implements ActionListener{
-	/**
-	 * the container of the bubbles on the screen
-	 */
 	private ArrayList<RowList> bubbles;
-	
-	/**
-	 * the container of the 4 bubbles waiting to be shot
-	 */
 	private LinkedList<Bubble> upcoming;
 	private MovingBubble moving_bubble;
 	private int initial_rows;
@@ -32,8 +25,8 @@ public class Game implements ActionListener{
 	private long score;
 	private boolean stopped;
 	public static final int ROW_COUNT = 12;
-	public static final int COL_COUNT_FULL = 14;
-	public static final int COL_COUNT = 13;
+	public static final int COL_COUNT_FULL = 43;
+	public static final int COL_COUNT = 42;
 	public static final int SCORE_SHOT = 10;
 	public static final int SCORE_COHERENT = 20;
 	public static final int SCORE_FLOATING = 40;
@@ -52,7 +45,7 @@ public class Game implements ActionListener{
 		for(int i = 0; i<ROW_COUNT; i++){
 			RowList r = new RowList((i%2==0 ? true : false));
 			bubbles.add(r);
-			for(int j=0; j<(r.isFull() ? 14 : 13); j++){
+			for(int j=0; j<(r.isFull() ? 43 : 42); j++){
 				
 				Bubble b = new Bubble(Bubble.getRandomColor(colors));
 				b.setLocation(
@@ -117,18 +110,17 @@ public class Game implements ActionListener{
 	public void fire(Point mouseLoc, Point panelLoc){
 		boolean movingExists = !(moving_bubble==null);
 		movingExists = (movingExists ? moving_bubble.isMoving() : false);
-		if(!movingExists){
-			Point dir = new Point(mouseLoc.x-panelLoc.x,
-							  mouseLoc.y-panelLoc.y);
-		moving_bubble = new MovingBubble(upcoming.remove(),dir);
-		playSoundEffect("C:\\\\Users\\\\FATIMA WASEEM\\\\OneDrive - Higher Education Commission\\\\Desktop\\\\bubble_shooter-master1\\\\bubble_shooter\\float.wav");
-		upcoming.add(new Bubble(Bubble.getRandomColor(colors)));
-		arrangeUpcoming();
-		numOfBubbles++;
-		score+=SCORE_SHOT;
-		mainFrame.updateScore(score);
-		timer = new Timer(20, this);
-		timer.start();
+		if(!movingExists && mouseLoc.y < ( Constants.FIELD_SIZE_Y + 8)) {
+			Point dir = new Point(mouseLoc.x-panelLoc.x, mouseLoc.y-panelLoc.y);
+			moving_bubble = new MovingBubble(upcoming.remove(),dir);
+			playSoundEffect("C:\\\\Users\\\\FATIMA WASEEM\\\\OneDrive - Higher Education Commission\\\\Desktop\\\\bubble_shooter-master1\\\\bubble_shooter\\float.wav");
+			upcoming.add(new Bubble(Bubble.getRandomColor(colors)));
+			arrangeUpcoming();
+			numOfBubbles++;
+			score+=SCORE_SHOT;
+			mainFrame.updateScore(score);
+			timer = new Timer(20, this);
+			timer.start();
 		}
 	}
 
@@ -200,8 +192,9 @@ public class Game implements ActionListener{
 	                b.getLocation().y+Constants.ROW_DISTANCE/2));
 			}
 		}
+
 		RowList newRow = new RowList(!bubbles.get(0).isFull());
-		for (int i = 0; i< (newRow.isFull() ? 14 : 13); i++){
+		for (int i = 0; i< (newRow.isFull() ? 43 : 42); i++){
 			Bubble b = new Bubble(Bubble.getRandomColor(colors));
 			b.setLocation(
 				new Point((newRow.isFull() ?
@@ -267,7 +260,7 @@ public class Game implements ActionListener{
 		markColor(row, col);
 		int ret = 0;
 		if(countMarked()>2){
-			playSoundEffect("C:\\Desktop\\bubble_shooter-master1\\bubble_shooter\\pop.wav");
+			playSoundEffect("C:\\\\Users\\\\FATIMA WASEEM\\\\OneDrive - Higher Education Commission\\\\Desktop\\\\bubble_shooter-master1\\\\bubble_shooter\\pop.wav");
 			ret = countMarked();
 			removeMarked();
 		}

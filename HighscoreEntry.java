@@ -1,9 +1,8 @@
 package bubble_shooter;
 import java.io.*;
-import java.util.*;
 
 //  a class that can store an entry of highscore
-public class HighscoreEntry implements Serializable, Comparable<HighscoreEntry>, Comparator<HighscoreEntry>{
+public class HighscoreEntry implements Serializable, Comparable<HighscoreEntry>{
 	private String name;
 	private long score;
 	private int rows;
@@ -82,12 +81,5 @@ public class HighscoreEntry implements Serializable, Comparable<HighscoreEntry>,
 		if(score < other.getScore()) return 1;
 		return 0;
 	}
-	
-	// This is used when the class also acts as a Comparator.
-	@Override
-	public int compare(HighscoreEntry h1, HighscoreEntry h2) {
-		if(h1.score > h2.getScore()) return -1;
-		if(h1.score < h2.getScore()) return 1;
-		return 0;
-	}
+
 }

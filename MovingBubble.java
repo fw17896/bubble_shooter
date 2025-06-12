@@ -10,7 +10,7 @@ public class MovingBubble extends Bubble {
 	private double step_y;
 	private double loc_x;
 	private double loc_y;
-	private static double STEP = 5;
+	private static double STEP = 8;
 
 	// Constructor that initializes the bubble's movement direction and location
 	public MovingBubble(Bubble b, Point dir) {
