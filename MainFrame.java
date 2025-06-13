@@ -35,7 +35,7 @@ public class MainFrame extends JFrame implements ActionListener{
         JMenu gameMenu = new JMenu("Game");
 		JMenuItem mainMenuItem = new JMenuItem("Main Menu");
         JMenuItem restartItem = new JMenuItem("Restart");
-		JMenuItem highscoresItem = new JMenuItem("Highscores");
+		// JMenuItem highscoresItem = new JMenuItem("Highscores");
         JMenuItem exitItem = new JMenuItem("Exit");
 		
 		mainMenuItem.addActionListener(e -> {
@@ -47,7 +47,7 @@ public class MainFrame extends JFrame implements ActionListener{
 
         restartItem.addActionListener(e -> {
 			if (gameWindow != null) {
-				gameWindow.dispose(); // Close old game window
+				gameWindow.dispose();
 			}
 
 			// Re-initialize everything like in actionPerformed()
@@ -65,12 +65,12 @@ public class MainFrame extends JFrame implements ActionListener{
 			gameWindow.setVisible(true);
 		});
 
-		highscoresItem.addActionListener(e -> {
-            if (canvas != null) {
-                canvas.displayHighscore(0, false);
-            } else {
-            }
-        });
+		// highscoresItem.addActionListener(e -> {
+        //     if (canvas != null) {
+        //         canvas.displayHighscore(0, false);
+        //     } else {
+        //     }
+        // });
 
         exitItem.addActionListener(e -> System.exit(0));
 
@@ -78,8 +78,8 @@ public class MainFrame extends JFrame implements ActionListener{
 		gameMenu.addSeparator();
 		gameMenu.add(mainMenuItem);
 		gameMenu.addSeparator();
-		gameMenu.add(highscoresItem);
-		gameMenu.addSeparator();
+		// gameMenu.add(highscoresItem);
+		// gameMenu.addSeparator();
         gameMenu.add(exitItem);
 
         JMenu soundMenu = new JMenu("Sound");
@@ -108,7 +108,7 @@ public class MainFrame extends JFrame implements ActionListener{
 	
 	// makes the left panel display the highscores
 	public void init(){
-		if (canvas != null) { // Ensure canvas is not null
+		if (canvas != null) {
             canvas.displayHighscore(0, true);
         }
 	}
@@ -188,6 +188,3 @@ public class MainFrame extends JFrame implements ActionListener{
 	}
 
 }
-
-
-

@@ -11,9 +11,12 @@ public class SettingsPanel extends JPanel {
 	private JPanel lowerPanel;
 	private JButton startButton;
 	private JButton settingButton;
+    private JButton highscoreButton;
+    private JButton exitButton;
 	private final Image backgroundImg;
 	private int selectedRows = 5;
     private int selectedColors = 4;
+    private Canvas canvas;
 	
 	// constructor, initiates the panel and sets the parameter as its mainframe
 	public SettingsPanel(MainFrame mainFrame) {
@@ -45,23 +48,41 @@ public class SettingsPanel extends JPanel {
 		// Buttons
 		startButton = new JButton("Start Game");
 		settingButton = new JButton("Settings");
+        highscoreButton = new JButton("High Scores");
+        exitButton = new JButton("Exit");
 
 		startButton.setActionCommand("start");
 		startButton.addActionListener(mainFrame);
+        exitButton.addActionListener(e -> System.exit(0));
 
         startButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         settingButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        highscoreButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        exitButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		lowerPanel.add(startButton);
         lowerPanel.add(Box.createVerticalStrut(20));
 		lowerPanel.add(settingButton);
         lowerPanel.add(Box.createVerticalStrut(40));
+        lowerPanel.add(highscoreButton);
+        lowerPanel.add(Box.createVerticalStrut(40));
+        lowerPanel.add(exitButton);
+        lowerPanel.add(Box.createVerticalStrut(40));
 
 		//Button Style
-		styleButton(startButton, new Color(255, 140, 0)); // Steel blue
+		styleButton(startButton, new Color(255, 140, 0));
         styleButton(settingButton, new Color(255, 140, 0));
-		
+        styleButton(highscoreButton, new Color(255, 140, 0));
+        styleButton(exitButton, new Color(255, 140, 0));
+
 		settingButton.addActionListener(e -> openSettingsDialog());
+
+        highscoreButton.addActionListener(e -> {
+            if (canvas != null) {
+                canvas.displayHighscore(0, false);
+            } else {
+            }
+        });
 
 		add(lowerPanel);
 		setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
