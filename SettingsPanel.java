@@ -22,7 +22,7 @@ public class SettingsPanel extends JPanel {
 	public SettingsPanel(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		backgroundImg = new ImageIcon("C:\\Users\\FATIMA WASEEM\\OneDrive - Higher Education Commission\\Desktop\\bubble_shooter-master1\\bubble_shooter\\bdg.jpg").getImage();
+		backgroundImg = new ImageIcon("C:\\Users\\LENOVO\\Desktop\\STUDY UNI\\Sems3\\OOP\\OOP LAB\\Final Project\\bubble_shooter\\bubble_shooter\\bdg.jpg").getImage();
     }
 
 
@@ -78,13 +78,15 @@ public class SettingsPanel extends JPanel {
 		settingButton.addActionListener(e -> openSettingsDialog());
 
         highscoreButton.addActionListener(e -> {
-            if (canvas != null) {
-                canvas.displayHighscore(0, false);
-            } else {
-                JOptionPane.showMessageDialog(this, "Highscores not available yet. Please start a game first.");
+        // Create and display the highscore window
+        JFrame hsFrame = new JFrame("High Scores");
+        hsFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        hsFrame.add(new HighscoreDisplayPanel());
+        hsFrame.setSize(500, 400);
+        hsFrame.setLocationRelativeTo(null); // Center the window
+        hsFrame.setVisible(true);
+    });
 
-            }
-        });
 
 		add(lowerPanel);
 		setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
