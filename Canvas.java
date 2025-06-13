@@ -10,7 +10,7 @@ import javax.swing.*;
 import javax.swing.table.*;
 
 
-// the class for providing a canvas for the game and the highscores, and for managing the highscores
+// it provides a canvas for the game and the highscores, and for managing the highscores
 public class Canvas extends JPanel implements MouseMotionListener, MouseListener, ActionListener {
 	private Arrow arrow;
 	private Game game;
@@ -29,15 +29,16 @@ public class Canvas extends JPanel implements MouseMotionListener, MouseListener
 	private JPanel blur;
 	private BufferedImage backgroundImage;
 
-	// constructor for the class. sets of the table that displayes the highscores, a layer to mildly blur the underlying bubbles and a dialog for asking for a name of the player reached the toplist 
+	// constructor for the class. sets of the table that displayes the highscores
 	public Canvas(){
 		setLayout(new BorderLayout());
-		setPreferredSize(null); // Let layout manager decide
-
+		setPreferredSize(null);
 		setBorder(BorderFactory.createEmptyBorder());
+
 		addMouseMotionListener(this);
 		addMouseListener(this);
 		setOpaque(true);
+
 		arrow = new Arrow();
 		
 		lPane = new JLayeredPane();
@@ -47,10 +48,7 @@ public class Canvas extends JPanel implements MouseMotionListener, MouseListener
 		blur.setBackground(new Color(0, 0, 0, 100));
 		
 		highscorePanel = new JPanel();	
-		highscorePanel.setBackground(new Color(highscorePanel.getBackground().getRed(),
-									           highscorePanel.getBackground().getGreen(),
-									           highscorePanel.getBackground().getRed(),
-									           120));
+		highscorePanel.setBackground(new Color(highscorePanel.getBackground().getRed(), highscorePanel.getBackground().getGreen(), highscorePanel.getBackground().getRed(), 120));
 		highscorePanel.setLayout(new BorderLayout());
 		
 		highscores = new Highscores();
@@ -61,7 +59,7 @@ public class Canvas extends JPanel implements MouseMotionListener, MouseListener
 
 		highscoreTable.setFont(new Font("Verdana", Font.BOLD, 16));
 		highscoreTable.setForeground(Color.WHITE);
-		highscoreTable.setBackground(new Color(0, 0, 0, 0)); // transparent
+		highscoreTable.setBackground(new Color(0, 0, 0, 0));
 
 		highscoreTable.setRowHeight(32);
 		highscoreTable.setGridColor(new Color(255, 255, 255, 60));
@@ -114,14 +112,14 @@ public class Canvas extends JPanel implements MouseMotionListener, MouseListener
 		subNamePanel.add(formContainer);
 		namePanel.add(subNamePanel,BorderLayout.CENTER);
 
-		setLayout(null); // allow absolute positioning
+		setLayout(null);
 
 
 		try {
-            backgroundImage = ImageIO.read(new File("C:\\\\Users\\\\FATIMA WASEEM\\\\OneDrive - Higher Education Commission\\\\Desktop\\\\bubble_shooter-master1\\\\bubble_shooter\\\\bdg.jpg"));
+            backgroundImage = ImageIO.read(new File("C:\\Users\\FATIMA WASEEM\\OneDrive - Higher Education Commission\\Desktop\\bubble_shooter-master1\\bubble_shooter\\bdg.jpg"));
         } catch (IOException e) {
             e.printStackTrace();
-            System.err.println("Error loading background image! Please check the file path: C:\\\\Users\\\\FATIMA WASEEM\\\\OneDrive - Higher Education Commission\\\\Desktop\\\\bubble_shooter-master1\\\\bubble_shooter\\\\bdg.jpg");
+            System.err.println("Error loading background image! Please check the file path: C:\\Users\\FATIMA WASEEM\\OneDrive - Higher Education Commission\\Desktop\\bubble_shooter-master1\\bubble_shooter\\bdg.jpg");
         }
 		
 	}
@@ -133,7 +131,7 @@ public class Canvas extends JPanel implements MouseMotionListener, MouseListener
 		button.setFocusPainted(false);
 		button.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
 		button.setCursor(new Cursor(Cursor.HAND_CURSOR));
-}
+	}
 
 	
 
@@ -151,6 +149,7 @@ public class Canvas extends JPanel implements MouseMotionListener, MouseListener
         int hsPanelPreferredHeight = (int) (currentCanvasHeight * 0.8);
         int hsPanelX = (currentCanvasWidth - hsPanelPreferredWidth) / 2;
         int hsPanelY = (currentCanvasHeight - hsPanelPreferredHeight) / 2;
+
         highscorePanel.setBounds(hsPanelX, hsPanelY, hsPanelPreferredWidth, hsPanelPreferredHeight);
 
 		lPane.remove(namePanel);
@@ -176,20 +175,11 @@ public class Canvas extends JPanel implements MouseMotionListener, MouseListener
 		JButton backButton = new JButton("Back");
 		styleGameButton(backButton);
 		backButton.setBounds(hsPanelX + hsPanelPreferredWidth - 200, hsPanelY + hsPanelPreferredHeight + 10, 150, 40);
-		//-------------back to game ---------------
 		backButton.addActionListener(e -> {
 			remove(lPane);
 			repaint();
 			gameStarted = true;
 		});
-
-		//---------------back to main menu option----------
-		// backButton.addActionListener(e -> {
-		// 	if (mainFrame != null) {
-		// 		SwingUtilities.getWindowAncestor(this).dispose(); // Closes the game window
-		// 		mainFrame.showMainMenu(); // Shows the original main menu
-		// 	}
-		// });
 
 		lPane.add(backButton, JLayeredPane.MODAL_LAYER);
 
@@ -250,6 +240,7 @@ public class Canvas extends JPanel implements MouseMotionListener, MouseListener
 		}
 	}
 	
+	// Paints the game panel including background, bubbles, and arrow
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -277,6 +268,7 @@ public class Canvas extends JPanel implements MouseMotionListener, MouseListener
 		mouseMoved(arg0);
 	}
 
+	// Repaints the panel when the mouse moves
 	@Override
 	public void mouseMoved(MouseEvent arg0) {
 		if (gameStarted) {
@@ -284,6 +276,7 @@ public class Canvas extends JPanel implements MouseMotionListener, MouseListener
         }
 	}
 
+	// Fires a bubble on mouse click if the game is active
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 		if(game !=null){
@@ -307,6 +300,7 @@ public class Canvas extends JPanel implements MouseMotionListener, MouseListener
 	@Override
 	public void mouseReleased(MouseEvent arg0) {}
 
+	// Handles player name input and updates highscores on action event
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		 String playerName = textField.getText().trim();
@@ -325,29 +319,24 @@ public class Canvas extends JPanel implements MouseMotionListener, MouseListener
 					saveHighscores();
 				}
 
-				// Reload updated highscores
 				loadHighscores();
-
-				// Clear previous canvas and create a new one
 				lPane.removeAll();
 				lPane.revalidate();
 				lPane.repaint();
-
-				// Display the updated highscore panel
 				displayHighscore(0, true);
 
 			} catch (Exception ex) {
-				ex.printStackTrace(); // Log any exceptions during saving
+				ex.printStackTrace();
 			} finally {
-				// Re-enable the UI components (not needed if namePanel is gone)
 				textField.setEnabled(true);
 				sourceButton.setEnabled(true);
 			}
 		}
 	}
 	
+	// Sets the reference to the MainFrame
 	public void setMainFrame(MainFrame frame) {
     	this.mainFrame = frame;
-}
+	}
 
 }

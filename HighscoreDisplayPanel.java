@@ -1,19 +1,21 @@
 package bubble_shooter;
 
-import javax.swing.*;
-import javax.swing.table.*;
 import java.awt.*;
 import java.io.*;
+import javax.swing.*;
+import javax.swing.table.*;
 
+// it displays the highscore table with custom styling and transparency
 public class HighscoreDisplayPanel extends JPanel {
     private JTable highscoreTable;
     private Highscores highscores;
     private JScrollPane scrollPane;
     private static final String fileName = "bubble_shooter_hs.dat";
 
+     // Constructor initializes and styles the highscore table
     public HighscoreDisplayPanel() {
         setLayout(new BorderLayout());
-        setBackground(new Color(0, 0, 0, 180));  // Semi-transparent background
+        setBackground(new Color(0, 0, 0, 180)); 
 
         highscores = loadHighscores();
 
@@ -23,7 +25,7 @@ public class HighscoreDisplayPanel extends JPanel {
 
         highscoreTable.setFont(new Font("Verdana", Font.BOLD, 16));
         highscoreTable.setForeground(Color.WHITE);
-        highscoreTable.setBackground(new Color(0, 0, 0, 0)); // transparent
+        highscoreTable.setBackground(new Color(0, 0, 0, 0)); 
         highscoreTable.setRowHeight(32);
         highscoreTable.setGridColor(new Color(255, 255, 255, 60));
 
@@ -41,6 +43,7 @@ public class HighscoreDisplayPanel extends JPanel {
         add(scrollPane, BorderLayout.CENTER);
     }
 
+    // Loads highscores from file
     private Highscores loadHighscores() {
         try {
             File f = new File(fileName);
@@ -53,7 +56,7 @@ public class HighscoreDisplayPanel extends JPanel {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return new Highscores();  // Return empty if failed
+        return new Highscores();
     }
 }
 

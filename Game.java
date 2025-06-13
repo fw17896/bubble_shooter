@@ -32,7 +32,7 @@ public class Game implements ActionListener{
 	public static final int SCORE_FLOATING = 40;
 
 	
-	// contructor for a new game. initalises the bubble matrix, the upcoming bubbles and other parameters
+	// contructor for a new game. initalises the bubble matrix, the upcoming bubbles etc
 	public Game(int row, int colors, Canvas c){
 		canvas = c;
 		stopped = false;
@@ -285,6 +285,7 @@ public class Game implements ActionListener{
 		return ret;
 	}
 
+	//play the background sound
 	public void playSoundEffect(String filepath) {
 		try {
 			AudioInputStream audioStream = AudioSystem.getAudioInputStream(new File(filepath));
@@ -385,7 +386,7 @@ public class Game implements ActionListener{
 		return score;
 	}
 	
-
+	// Handles bubble movement, collision detection
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		moving_bubble.move();

@@ -3,7 +3,7 @@ import java.io.*;
 import java.util.*;
 import javax.swing.table.AbstractTableModel;
 
-//   a class that can store the whole set of highscored and provides, a tablemodell for the table
+// it store the whole set of highscored and provides a tablemodell for the table
 public class Highscores extends AbstractTableModel implements Serializable{	 
 	ArrayList<HighscoreEntry> entries = new ArrayList<HighscoreEntry>();
 	

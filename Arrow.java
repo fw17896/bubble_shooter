@@ -13,10 +13,12 @@ public class Arrow{
 	private static final int LENGTH = 80;
 	private static final int SHAFT_WIDTH = 6;
 
+    // Constructor initializes the arrow's point to the center bottom of the field
 	public Arrow(){
 		p = new Point(Constants.FIELD_SIZE_X/2,0);
 	}
 	
+    // Draws the arrow on the screen pointing toward the mouse location
     public void paintComponent(Graphics2D g2d, Point base) {
     	g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
