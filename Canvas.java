@@ -173,14 +173,24 @@ public class Canvas extends JPanel implements MouseMotionListener, MouseListener
 			lPane.remove(comp);
 		}
 
-		JButton backButton = new JButton("Back to Game");
+		JButton backButton = new JButton("Back");
 		styleGameButton(backButton);
 		backButton.setBounds(hsPanelX + hsPanelPreferredWidth - 200, hsPanelY + hsPanelPreferredHeight + 10, 150, 40);
+		//-------------back to game ---------------
 		backButton.addActionListener(e -> {
 			remove(lPane);
 			repaint();
 			gameStarted = true;
 		});
+
+		//---------------back to main menu option----------
+		// backButton.addActionListener(e -> {
+		// 	if (mainFrame != null) {
+		// 		SwingUtilities.getWindowAncestor(this).dispose(); // Closes the game window
+		// 		mainFrame.showMainMenu(); // Shows the original main menu
+		// 	}
+		// });
+
 		lPane.add(backButton, JLayeredPane.MODAL_LAYER);
 
 		remove(lPane);

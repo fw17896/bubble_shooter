@@ -63,11 +63,11 @@ public class SettingsPanel extends JPanel {
 		lowerPanel.add(startButton);
         lowerPanel.add(Box.createVerticalStrut(20));
 		lowerPanel.add(settingButton);
-        lowerPanel.add(Box.createVerticalStrut(40));
+        lowerPanel.add(Box.createVerticalStrut(20));
         lowerPanel.add(highscoreButton);
-        lowerPanel.add(Box.createVerticalStrut(40));
+        lowerPanel.add(Box.createVerticalStrut(20));
         lowerPanel.add(exitButton);
-        lowerPanel.add(Box.createVerticalStrut(40));
+        lowerPanel.add(Box.createVerticalStrut(20));
 
 		//Button Style
 		styleButton(startButton, new Color(255, 140, 0));
@@ -81,6 +81,8 @@ public class SettingsPanel extends JPanel {
             if (canvas != null) {
                 canvas.displayHighscore(0, false);
             } else {
+                JOptionPane.showMessageDialog(this, "Highscores not available yet. Please start a game first.");
+
             }
         });
 
@@ -102,6 +104,12 @@ public class SettingsPanel extends JPanel {
         button.setCursor(new Cursor(Cursor.HAND_CURSOR));
         button.setContentAreaFilled(false);
         button.setOpaque(true);
+
+        Dimension buttonSize = new Dimension(200, 45);
+        button.setPreferredSize(buttonSize);
+        button.setMaximumSize(buttonSize);
+        button.setMinimumSize(buttonSize);
+
 
         button.addMouseListener(new MouseAdapter() {
             @Override
@@ -177,6 +185,11 @@ public class SettingsPanel extends JPanel {
         return selectedColors;
     }
 
+    public void setCanvas(Canvas canvas) {
+        this.canvas = canvas;
+    }
+
+
 	//updates the score in the score counter field
 	public void updateScore(long score){
 		scoreLabel.setText(String.valueOf(score));
@@ -188,4 +201,3 @@ public class SettingsPanel extends JPanel {
     }
 	
 }
-
