@@ -1,14 +1,14 @@
 package bubble_shooter;
 import java.io.*;
 
-//  a class that can store an entry of highscore
+//  it store an entry of highscore
 public class HighscoreEntry implements Serializable, Comparable<HighscoreEntry>{
 	private String name;
 	private long score;
 	private int rows;
 	private int color;
 		
-	//  constructor for the class
+	//  constructor
 	public HighscoreEntry(String name, long score, int rows, int color) {
 		this.name = name;
 		this.score = score;
@@ -74,7 +74,7 @@ public class HighscoreEntry implements Serializable, Comparable<HighscoreEntry>{
 		color = (int) o.readInt();
 	}
 	
-	// This is used for natural ordering.
+	// for natural ordering.
 	@Override
 	public int compareTo(HighscoreEntry other) {
 		if(score > other.getScore()) return -1;

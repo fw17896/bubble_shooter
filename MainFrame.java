@@ -8,6 +8,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.swing.*;
 
+// Main application frame for the Bubble Shooter game
 public class MainFrame extends JFrame implements ActionListener{
 	
 	private SettingsPanel mainPanel;
@@ -15,13 +16,15 @@ public class MainFrame extends JFrame implements ActionListener{
 	private Clip backgroundMusic;
 	private JFrame gameWindow;
 	
-	// constructor, initiates the components, and sets the properties of the frame
+	// Constructor, initializes main frame, panel, and starts background music
 	public MainFrame() {
 		setLayout(new BorderLayout());
 		mainPanel = new SettingsPanel(this);
 		mainPanel.initComponents();
 		add(mainPanel, BorderLayout.CENTER);
-		playBackgroundMusic("C:\\Users\\FATIMA WASEEM\\OneDrive - Higher Education Commission\\Desktop\\bubble_shooter-master1\\bubble_shooter\\background.wav"); // use your path
+
+		playBackgroundMusic("C:\\Users\\FATIMA WASEEM\\OneDrive - Higher Education Commission\\Desktop\\bubble_shooter-master1\\bubble_shooter\\background.wav");
+
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setTitle("Bubble Shooter");	
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -29,6 +32,7 @@ public class MainFrame extends JFrame implements ActionListener{
 
 	}
 
+	 // Creates and returns a custom menu bar
 	private JMenuBar createMenuBar() {
         JMenuBar menuBar = new JMenuBar();
 
@@ -50,7 +54,6 @@ public class MainFrame extends JFrame implements ActionListener{
 				gameWindow.dispose();
 			}
 
-			// Re-initialize everything like in actionPerformed()
 			gameWindow = new JFrame("Bubble Shooter - Game");
 			gameWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			gameWindow.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -106,14 +109,14 @@ public class MainFrame extends JFrame implements ActionListener{
         return menuBar;
     }
 	
-	// makes the left panel display the highscores
+	 // Displays highscores when game starts
 	public void init(){
 		if (canvas != null) {
             canvas.displayHighscore(0, true);
         }
 	}
 	
-	// can be called when the game is won, displays the highscores
+	// Displays highscores when game is won and updates score
 	public void gameWon(long score){
 		mainPanel.updateScore(score);
         if (canvas != null) {
@@ -121,7 +124,7 @@ public class MainFrame extends JFrame implements ActionListener{
         }
 	}
 	
-	//can be called when the game is lost, displays the highscores
+	// Displays highscores when game is lost and updates score
 	public void gameLost(long score){
 		mainPanel.updateScore(score);
         if (canvas != null) { 
@@ -129,12 +132,12 @@ public class MainFrame extends JFrame implements ActionListener{
         }
 	}
 	
-	//makes the right panel update the score counter to the current one
+	// Updates the current score display
 	public void updateScore(long score){
 		mainPanel.updateScore(score);
 	}
 
-
+	// Handles start button press to launch the game window and initialize game
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equals("start")) {
@@ -147,17 +150,17 @@ public class MainFrame extends JFrame implements ActionListener{
 				canvas.setMainFrame(this);
 				canvas.newGame(mainPanel.getRow(), mainPanel.getColor());
 				canvas.getGame().setMainFrame(this);
+
 				gameWindow.setJMenuBar(createMenuBar());
 				gameWindow.add(canvas);
-
 				gameWindow.setVisible(true);
 			}
 		}
 
-
+	 // Shows the main menu panel with background music
 	public void showMainMenu() {
 		getContentPane().removeAll();
-		playBackgroundMusic("C:\\Users\\FATIMA WASEEM\\OneDrive - Higher Education Commission\\Desktop\\bubble_shooter-master1\\bubble_shooter\\background.wav");
+		playBackgroundMusic("C:\\Users\\FATIMA WASEEM\\OneDrive - Higher Education Commission\\Desktop\\bubble_shooter-master1\\bubble_shooter\\background.wav");	
 		mainPanel = new SettingsPanel(this);
 		mainPanel.initComponents();
 		add(mainPanel, BorderLayout.CENTER);
@@ -165,10 +168,12 @@ public class MainFrame extends JFrame implements ActionListener{
 		repaint();
 	}
 
+	// Returns the main settings panel
 	public SettingsPanel getMainPanel() {
 		return mainPanel;
 	}
 
+	// Plays background music
 	public void playBackgroundMusic(String filepath) {
 		try {
 			AudioInputStream audioStream = AudioSystem.getAudioInputStream(new File(filepath));
@@ -180,6 +185,7 @@ public class MainFrame extends JFrame implements ActionListener{
 		}
 	}
 
+	// Stops the background music 
 	public void stopBackgroundMusic() {
 		if (backgroundMusic != null && backgroundMusic.isRunning()) {
 			backgroundMusic.stop();

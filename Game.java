@@ -32,7 +32,7 @@ public class Game implements ActionListener{
 	public static final int SCORE_FLOATING = 40;
 
 	
-	// contructor for a new game. initalises the bubble matrix, the upcoming bubbles etc
+	// contructor for a new game. initalizes the bubble matrix, the upcoming bubbles etc
 	public Game(int row, int colors, Canvas c){
 		canvas = c;
 		stopped = false;
@@ -95,13 +95,10 @@ public class Game implements ActionListener{
 	// arrange the bubble when bubble is removed and add
 	private void arrangeUpcoming(){
 		upcoming.element().setLocation(
-				new Point(Constants.FIELD_SIZE_X/2-Bubble.RADIUS,
-				          Constants.FIELD_SIZE_Y-Bubble.RADIUS));
+				new Point(Constants.FIELD_SIZE_X/2-Bubble.RADIUS, Constants.FIELD_SIZE_Y-Bubble.RADIUS));
 		upcoming.element().setVisible(true);
 		for (int i=1; i<4; i++){
-			upcoming.get(i).setLocation(new Point(
-					Constants.FIELD_SIZE_X-(4-i)*(2*(Bubble.RADIUS+6)),
-					Constants.FIELD_SIZE_Y-(Bubble.RADIUS+1)));
+			upcoming.get(i).setLocation(new Point(Constants.FIELD_SIZE_X-(4-i)*(2*(Bubble.RADIUS+6)),Constants.FIELD_SIZE_Y-(Bubble.RADIUS+1)));
 			upcoming.get(i).setVisible(true);
 		}
 	}
@@ -188,18 +185,14 @@ public class Game implements ActionListener{
 		bubbles.remove(ROW_COUNT-1);
 		for (RowList r : bubbles){
 			for (Bubble b : r){
-				b.setLocation(new Point(b.getLocation().x,
-	                b.getLocation().y+Constants.ROW_DISTANCE/2));
+				b.setLocation(new Point(b.getLocation().x, b.getLocation().y+Constants.ROW_DISTANCE/2));
 			}
 		}
 
 		RowList newRow = new RowList(!bubbles.get(0).isFull());
 		for (int i = 0; i< (newRow.isFull() ? 43 : 42); i++){
 			Bubble b = new Bubble(Bubble.getRandomColor(colors));
-			b.setLocation(
-				new Point((newRow.isFull() ?
-					       i*2*(Bubble.RADIUS+1) :
-						   i*2*(Bubble.RADIUS+1)+(Bubble.RADIUS+1)),0));
+			b.setLocation(new Point((newRow.isFull() ?i*2*(Bubble.RADIUS+1) :i*2*(Bubble.RADIUS+1)+(Bubble.RADIUS+1)),0));
 			b.setVisible(true);
 			newRow.add(b);
 			numOfBubbles++;
@@ -207,7 +200,7 @@ public class Game implements ActionListener{
 		bubbles.add(0,newRow);
 	}
 	
-	// returns the neighbours of a bubble in the grid
+	// returns the neighbours of a bubble
 	private ArrayList<Bubble> getNeighbours(int row, int col){
 		ArrayList<Bubble> neighbours = new ArrayList<Bubble>();
 		//LEFT
@@ -260,7 +253,7 @@ public class Game implements ActionListener{
 		markColor(row, col);
 		int ret = 0;
 		if(countMarked()>2){
-			playSoundEffect("C:\\\\Users\\\\FATIMA WASEEM\\\\OneDrive - Higher Education Commission\\\\Desktop\\\\bubble_shooter-master1\\\\bubble_shooter\\pop.wav");
+			playSoundEffect("C:\\Users\\FATIMA WASEEM\\OneDrive - Higher Education Commission\\Desktop\\bubble_shooter-master1\\bubble_shooter\\pop.wav");
 			ret = countMarked();
 			removeMarked();
 		}

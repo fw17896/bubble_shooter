@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.geom.*;
 
 //  Realises the moving arrow at the bottom of the screen.
-
 public class Arrow{
 
 	private Point p;
@@ -13,7 +12,7 @@ public class Arrow{
 	private static final int LENGTH = 80;
 	private static final int SHAFT_WIDTH = 6;
 
-    // Constructor initializes the arrow's point to the center bottom of the field
+    // Constructor, initializes the arrow's point to the center bottom of the field
 	public Arrow(){
 		p = new Point(Constants.FIELD_SIZE_X/2,0);
 	}
@@ -54,7 +53,6 @@ public class Arrow{
 
         g2d.setColor(Color.RED);
         g2d.fillPolygon(head);
-
         g2d.setTransform(old);
     }
 

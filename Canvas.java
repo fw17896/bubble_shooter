@@ -29,7 +29,7 @@ public class Canvas extends JPanel implements MouseMotionListener, MouseListener
 	private JPanel blur;
 	private BufferedImage backgroundImage;
 
-	// constructor for the class. sets of the table that displayes the highscores
+	// constructor for the class. sets of the table that displays the highscores
 	public Canvas(){
 		setLayout(new BorderLayout());
 		setPreferredSize(null);
@@ -210,7 +210,7 @@ public class Canvas extends JPanel implements MouseMotionListener, MouseListener
 		return game;
 	}
 	
-	// writes the highscores to a file named "bubble_shooter_hs.dat"
+	// writes the highscores
 	private void saveHighscores(){
 		try{
 			ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(fileName));
@@ -222,7 +222,7 @@ public class Canvas extends JPanel implements MouseMotionListener, MouseListener
 		}
 	}
 	
-	// reads the highscores from the fie named "bubble_shooter_hs.dat"
+	// reads the highscores
 	private void loadHighscores(){
 		try{
 			File f = new File("bubble_shooter_hs.dat");

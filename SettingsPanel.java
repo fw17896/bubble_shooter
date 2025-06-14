@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-//   a class to display the panel of settings and scores on the right and handle the settings of the game
+//it manages game settings, score display, and navigation buttons
 public class SettingsPanel extends JPanel {
 	
 	private final MainFrame mainFrame;
@@ -18,16 +18,15 @@ public class SettingsPanel extends JPanel {
     private int selectedColors = 4;
     private Canvas canvas;
 	
-	// constructor, initiates the panel and sets the parameter as its mainframe
+	 // Constructor, sets layout and loads background image
 	public SettingsPanel(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		backgroundImg = new ImageIcon("C:\\Users\\LENOVO\\Desktop\\STUDY UNI\\Sems3\\OOP\\OOP LAB\\Final Project\\bubble_shooter\\bubble_shooter\\bdg.jpg").getImage();
+		backgroundImg = new ImageIcon("C:\\Users\\FATIMA WASEEM\\OneDrive - Higher Education Commission\\Desktop\\bubble_shooter\\bubble_shooter\\bdg.jpg").getImage();
     }
 
 
-	//initiates the components of the panel and sets the look and the actionlisteners
-	 
+	 // Initializes UI components like buttons, labels, and their listeners
 	public void initComponents(){
 		//Title Label
 		JLabel titleLabel = new JLabel("Bubble Shooter", SwingConstants.CENTER);
@@ -37,9 +36,8 @@ public class SettingsPanel extends JPanel {
         add(Box.createVerticalStrut(100));
 		add(titleLabel);
         add(Box.createVerticalStrut(50));
-////////
 		scoreLabel = new JLabel();
-//////
+
 		 // Lower Panel
 		lowerPanel = new JPanel();
 		lowerPanel.setLayout(new BoxLayout(lowerPanel, BoxLayout.Y_AXIS));
@@ -78,15 +76,15 @@ public class SettingsPanel extends JPanel {
 		settingButton.addActionListener(e -> openSettingsDialog());
 
         highscoreButton.addActionListener(e -> {
-        // Create and display the highscore window
+        
+        // highscore window
         JFrame hsFrame = new JFrame("High Scores");
         hsFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         hsFrame.add(new HighscoreDisplayPanel());
         hsFrame.setSize(500, 400);
-        hsFrame.setLocationRelativeTo(null); // Center the window
+        hsFrame.setLocationRelativeTo(null); 
         hsFrame.setVisible(true);
     });
-
 
 		add(lowerPanel);
 		setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -125,6 +123,7 @@ public class SettingsPanel extends JPanel {
         });
     }
 
+     // configure number of colors and rows for the game
 	public void openSettingsDialog() {
         JDialog settingsDialog = new JDialog((Frame) SwingUtilities.getWindowAncestor(this), "Game Settings", true);
         settingsDialog.setSize(320, 220);
@@ -179,24 +178,27 @@ public class SettingsPanel extends JPanel {
         settingsDialog.setVisible(true);
     }
 
+    // Returns the selected number of rows
 	public int getRow() {
         return selectedRows;
     }
 
+    // Returns the selected number of colors
     public int getColor() {
         return selectedColors;
     }
 
+    // Sets the canvas reference
     public void setCanvas(Canvas canvas) {
         this.canvas = canvas;
     }
 
-
-	//updates the score in the score counter field
+	// Updates the score label with the current score
 	public void updateScore(long score){
 		scoreLabel.setText(String.valueOf(score));
 	}
 
+    // Paints the background image of the panel
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.drawImage(backgroundImg, 0, 0, getWidth(), getHeight(), this);

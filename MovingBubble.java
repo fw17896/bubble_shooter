@@ -12,7 +12,7 @@ public class MovingBubble extends Bubble {
 	private double loc_y;
 	private static double STEP = 8;
 
-	// Constructor that initializes the bubble's movement direction and location
+	// Constructor, initializes the bubble's movement direction and location
 	public MovingBubble(Bubble b, Point dir) {
 		super(b.getColor());
 		loc = new Point(b.getLocation());

@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
-// realises the bubbles of the game
+// handles the bubbles of the game
 public class Bubble {
 	Color color;
 	public static final int RADIUS = 14;
@@ -82,7 +82,7 @@ public class Bubble {
 		}
 	}
 	
-	// gets a random color that can be set as the color of a bubble
+	// gets a random color
 	public static Color getRandomColor(int bound){
 		int rnd = (int) (bound<=8 ? Math.random()*bound : Math.random()*8);
 		switch (rnd) {

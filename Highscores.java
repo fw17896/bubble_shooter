@@ -50,7 +50,7 @@ public class Highscores extends AbstractTableModel implements Serializable{
 		}
 	}
 
-	// Returns the class type of a specific column (used by JTable for rendering)
+	// Returns the class type of a specific column
 	@Override
 	public Class getColumnClass(int index){
 		switch(index) {
@@ -80,19 +80,19 @@ public class Highscores extends AbstractTableModel implements Serializable{
 	}
 	
 	
-	//   serialisation
+	//   serialization
 	public void writeObject(ObjectOutputStream o) throws IOException{
 		o.writeObject(entries);
 	}
 	
 	
-	//   deserialisation
+	//   deserialization
 	public void readObject(ObjectInputStream o) throws IOException, ClassNotFoundException{
 		entries = (ArrayList<HighscoreEntry>) o.readObject();
 	}
 	
 	
-	//   prints all entries on the standard output, only exists
+	//   prints all entries
 	public void print(){
 		for (HighscoreEntry h : entries){
 			System.out.println(h.getName()+" "+h.getScore()+" "+h.getRows()+" "+h.getColor());

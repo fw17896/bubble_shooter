@@ -5,14 +5,14 @@ import java.io.*;
 import javax.swing.*;
 import javax.swing.table.*;
 
-// it displays the highscore table with custom styling and transparency
+// it displays the highscore table
 public class HighscoreDisplayPanel extends JPanel {
     private JTable highscoreTable;
     private Highscores highscores;
     private JScrollPane scrollPane;
     private static final String fileName = "bubble_shooter_hs.dat";
 
-     // Constructor initializes and styles the highscore table
+     // Constructor, initializes and styles the highscore table
     public HighscoreDisplayPanel() {
         setLayout(new BorderLayout());
         setBackground(new Color(0, 0, 0, 180)); 
