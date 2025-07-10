@@ -114,9 +114,8 @@ public class Canvas extends JPanel implements MouseMotionListener, MouseListener
 
 		setLayout(null);
 
-
 		try {
-            backgroundImage = ImageIO.read(new File("C:\\Users\\FATIMA WASEEM\\OneDrive - Higher Education Commission\\Desktop\\bubble_shooter-master1\\bubble_shooter\\bdg.jpg"));
+            backgroundImage = ImageIO.read(new File("background.jpg"));
         } catch (IOException e) {
             e.printStackTrace();
             System.err.println("Error loading background image! Please check the file path: C:\\Users\\FATIMA WASEEM\\OneDrive - Higher Education Commission\\Desktop\\bubble_shooter-master1\\bubble_shooter\\bdg.jpg");
@@ -162,7 +161,6 @@ public class Canvas extends JPanel implements MouseMotionListener, MouseListener
             namePanel.setBounds(namePanelX, namePanelY, namePanelPreferredWidth, namePanelPreferredHeight);
 			lPane.add(namePanel, JLayeredPane.DRAG_LAYER);
 
-			
 		}else {
             lPane.remove(namePanel);
         }

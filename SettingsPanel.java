@@ -22,7 +22,7 @@ public class SettingsPanel extends JPanel {
 	public SettingsPanel(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		backgroundImg = new ImageIcon("C:\\Users\\FATIMA WASEEM\\OneDrive - Higher Education Commission\\Desktop\\bubble_shooter\\bubble_shooter\\bdg.jpg").getImage();
+		backgroundImg = new ImageIcon("background.jpg").getImage();
     }
 
 
@@ -77,13 +77,13 @@ public class SettingsPanel extends JPanel {
 
         highscoreButton.addActionListener(e -> {
         
-        // highscore window
-        JFrame hsFrame = new JFrame("High Scores");
-        hsFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        hsFrame.add(new HighscoreDisplayPanel());
-        hsFrame.setSize(500, 400);
-        hsFrame.setLocationRelativeTo(null); 
-        hsFrame.setVisible(true);
+            // highscore window
+            JFrame hsFrame = new JFrame("High Scores");
+            hsFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            hsFrame.add(new HighscoreDisplayPanel());
+            hsFrame.setSize(500, 400);
+            hsFrame.setLocationRelativeTo(null); 
+            hsFrame.setVisible(true);
     });
 
 		add(lowerPanel);

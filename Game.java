@@ -25,8 +25,8 @@ public class Game implements ActionListener{
 	private long score;
 	private boolean stopped;
 	public static final int ROW_COUNT = 12;
-	public static final int COL_COUNT_FULL = 43;
-	public static final int COL_COUNT = 42;
+	public static final int COL_COUNT_FULL = 51;
+	public static final int COL_COUNT = 50;
 	public static final int SCORE_SHOT = 10;
 	public static final int SCORE_COHERENT = 20;
 	public static final int SCORE_FLOATING = 40;
@@ -45,7 +45,7 @@ public class Game implements ActionListener{
 		for(int i = 0; i<ROW_COUNT; i++){
 			RowList r = new RowList((i%2==0 ? true : false));
 			bubbles.add(r);
-			for(int j=0; j<(r.isFull() ? 43 : 42); j++){
+			for(int j=0; j<(r.isFull() ? 51 : 50); j++){
 				
 				Bubble b = new Bubble(Bubble.getRandomColor(colors));
 				b.setLocation(
@@ -110,7 +110,7 @@ public class Game implements ActionListener{
 		if(!movingExists && mouseLoc.y < ( Constants.FIELD_SIZE_Y + 8)) {
 			Point dir = new Point(mouseLoc.x-panelLoc.x, mouseLoc.y-panelLoc.y);
 			moving_bubble = new MovingBubble(upcoming.remove(),dir);
-			playSoundEffect("C:\\\\Users\\\\FATIMA WASEEM\\\\OneDrive - Higher Education Commission\\\\Desktop\\\\bubble_shooter-master1\\\\bubble_shooter\\float.wav");
+			playSoundEffect("float.wav");
 			upcoming.add(new Bubble(Bubble.getRandomColor(colors)));
 			arrangeUpcoming();
 			numOfBubbles++;
@@ -190,7 +190,7 @@ public class Game implements ActionListener{
 		}
 
 		RowList newRow = new RowList(!bubbles.get(0).isFull());
-		for (int i = 0; i< (newRow.isFull() ? 43 : 42); i++){
+		for (int i = 0; i< (newRow.isFull() ? 51 : 50); i++){
 			Bubble b = new Bubble(Bubble.getRandomColor(colors));
 			b.setLocation(new Point((newRow.isFull() ?i*2*(Bubble.RADIUS+1) :i*2*(Bubble.RADIUS+1)+(Bubble.RADIUS+1)),0));
 			b.setVisible(true);
@@ -253,7 +253,7 @@ public class Game implements ActionListener{
 		markColor(row, col);
 		int ret = 0;
 		if(countMarked()>2){
-			playSoundEffect("C:\\Users\\FATIMA WASEEM\\OneDrive - Higher Education Commission\\Desktop\\bubble_shooter-master1\\bubble_shooter\\pop.wav");
+			playSoundEffect("pop.wav");
 			ret = countMarked();
 			removeMarked();
 		}

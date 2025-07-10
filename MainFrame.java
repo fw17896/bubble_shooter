@@ -23,7 +23,7 @@ public class MainFrame extends JFrame implements ActionListener{
 		mainPanel.initComponents();
 		add(mainPanel, BorderLayout.CENTER);
 
-		playBackgroundMusic("C:\\Users\\FATIMA WASEEM\\OneDrive - Higher Education Commission\\Desktop\\bubble_shooter-master1\\bubble_shooter\\background.wav");
+		playBackgroundMusic("background.wav");
 
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setTitle("Bubble Shooter");	
@@ -89,7 +89,7 @@ public class MainFrame extends JFrame implements ActionListener{
         JMenuItem playMusicItem = new JMenuItem("Play Background Music");
         JMenuItem stopMusicItem = new JMenuItem("Stop Music");
 
-        playMusicItem.addActionListener(e -> playBackgroundMusic("C:\\Users\\FATIMA WASEEM\\OneDrive - Higher Education Commission\\Desktop\\bubble_shooter-master1\\bubble_shooter\\background.wav")); 
+        playMusicItem.addActionListener(e -> playBackgroundMusic("background.wav")); 
         stopMusicItem.addActionListener(e -> stopBackgroundMusic());
 
         soundMenu.add(playMusicItem);
@@ -160,7 +160,7 @@ public class MainFrame extends JFrame implements ActionListener{
 	 // Shows the main menu panel with background music
 	public void showMainMenu() {
 		getContentPane().removeAll();
-		playBackgroundMusic("C:\\Users\\FATIMA WASEEM\\OneDrive - Higher Education Commission\\Desktop\\bubble_shooter-master1\\bubble_shooter\\background.wav");	
+		playBackgroundMusic("background.wav");	
 		mainPanel = new SettingsPanel(this);
 		mainPanel.initComponents();
 		add(mainPanel, BorderLayout.CENTER);
